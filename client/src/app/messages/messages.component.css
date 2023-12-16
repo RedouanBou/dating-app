@@ -1,0 +1,35 @@
+/* Table */
+table {
+	cursor: pointer;
+}
+
+/*.table > .btn-warning {
+	background-color: none;
+}*/
+
+
+/* Headers */
+#message-table-header {
+	width: 40%;
+}
+
+.table-header {
+	width: 40%;
+}
+
+
+/* Image */
+.img-circle {
+	max-height: 50px;
+}
+
+
+/* Pagination */
+.pagination-bottom {
+	position: absolute;
+	bottom: 80px;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+}

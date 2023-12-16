@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+	<div class="col-lg-3 col-sm-5">
+		<div class="card">
+			<img [src]="member.photoUrl || './assets/user.png'" [alt]="member.knownAs"
+				class="card-img-top img-thumbnail">
+			<div class="card-body">
+				<div class="mb-2" *ngIf="(presenceService.onlineUsers$ | async).includes(member.username)">
+					<i class="fa fa-user-circle text-success"></i> Online now
+				</div>
+				<div>
+					<strong>Location:</strong>
+					<p>{{ member.city }}, {{ member.country }}</p>
+				</div>
+				<div>
+					<strong>Age:</strong>
+					<p>{{ member.age }}</p>
+				</div>
+
+				<!-- Using date pipe and timeago pipe from npm -->
+				<!-- date: 'longDate' OR date: 'mediumDate' (default) OR date: 'dd MMM yyyy' -->
+				<div>
+					<strong>Last Active:</strong>
+					<p>{{ member.lastActive | timeago }}</p>
+				</div>
+				<div>
+					<strong>Member since:</strong>
+					<p>{{ member.created | date: 'dd MMM yyyy' }}</p>
+				</div>
+			</div>
+			<div class="card-footer">
+				<div class="btn-group d-flex">
+					<button class="btn btn-primary" (click)="addLike(member)">Like</button>
+					<button class="btn btn-success" (click)="selectTab(3)">Message</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Tabs -->
+	<div class="col-lg-6 col-sm-7">
+		<!-- Tab component encapsulates their own style -->
+		<!-- so in order to style we need to add a class and style it in a global file -->
+		<tabset class="member-tabset" #memberTabs>
+			<tab heading='About {{ member.knownAs }}' (selectTab)="onTabActivated($event)">
+				<h4>Description</h4>
+				<p>{{ member.introduction }}</p>
+
+				<h4>Looking for</h4>
+				<p>{{ member.lookingFor }}</p>
+			</tab>
+
+			<tab heading='Interests' (selectTab)="onTabActivated($event)">
+				<h4>Interests</h4>
+				<p>{{ member.interests }}</p>
+			</tab>
+
+			<tab heading='Photos' (selectTab)="onTabActivated($event)">
+				<ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+			</tab>
+
+			<tab heading='Messages' (selectTab)="onTabActivated($event)">
+				<!--<app-member-messages [username]="member.username"></app-member-messages>-->
+				<!-- 1. using service -->
+				<!--<app-member-messages [messages]="messages" [username]="member.username"></app-member-messages>-->
+				<!-- 2. using hub -->
+				<app-member-messages [username]="member.username"></app-member-messages>
+			</tab>
+		</tabset>
+	</div>
+</div>
